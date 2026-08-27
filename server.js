@@ -97,7 +97,10 @@ async function startLiveTranscribe(callId) {
         start: {
           webhook: `${base}/transcription`,
           lang: TRANSCRIBE_LANG,
-          // Both legs of the bridge: the inbound caller and the MCI side.
+          // Both legs of the bridge. Labels are relative to the call SID in
+          // `id` (the A-leg), not to who originated: verified by testing that
+          // `remote-caller` is the inbound PSTN caller and `local-caller` is
+          // the bridged peer (MCI). See README "direction mapping".
           direction: ['remote-caller', 'local-caller'],
           live_events: bool(TRANSCRIBE_LIVE_EVENTS),
           ai_summary: bool(TRANSCRIBE_AI_SUMMARY),
